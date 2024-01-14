@@ -1,0 +1,11 @@
+venv
+credentials.json
+wandb_key.json
+*.pt
+*.ckpt
+**/wandb
+**/cache*
+**/.eggs*
+*.egg-info
+**/dist
+**/__pycache__
