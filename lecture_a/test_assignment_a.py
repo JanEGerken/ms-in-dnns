@@ -41,18 +41,19 @@ def test_sequencer():
     target = [1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800]
     assert result == target, f"got {result}, expected {target}"
 
-    subprocess.run("python3 sequencer.py --sequence fibonacci", shell=True)
-    subprocess.run("python3 sequencer.py --sequence fibonacci --length 10", shell=True)
-    subprocess.run("python3 sequencer.py --sequence prime --length 10", shell=True)
-    subprocess.run("python3 sequencer.py --sequence square --length 10", shell=True)
-    subprocess.run("python3 sequencer.py --sequence triangular --length 10", shell=True)
-    subprocess.run("python3 sequencer.py --sequence factorial --length 10", shell=True)
+    subprocess.run("python sequencer.py --sequence fibonacci", shell=True)
+    subprocess.run("python sequencer.py --sequence fibonacci --length 10", shell=True)
+    subprocess.run("python sequencer.py --sequence prime --length 10", shell=True)
+    subprocess.run("python sequencer.py --sequence square --length 10", shell=True)
+    subprocess.run("python sequencer.py --sequence triangular --length 10", shell=True)
+    subprocess.run("python sequencer.py --sequence factorial --length 10", shell=True)
 
     output = subprocess.run(
-        "python3 sequencer.py --sequence xxx --length 10", shell=True, stderr=subprocess.PIPE
+        "python sequencer.py --sequence xxx --length 10", shell=True, stderr=subprocess.PIPE
     )
     assert "invalid choice" in output.stderr.decode()
 
+    print("All sequences have passed the test!")
 
 if __name__ == "__main__":
     test_imports()
