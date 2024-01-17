@@ -42,16 +42,17 @@ pip3 freeze
        the *Filter*. Additionally add "europe-west4" to the filter as a second
        element. Check the checkbox next to the quota
     3. Click "Edit quota" at the top right and request an increase to 1. As
-       a request description you can enter
-	> It will be used for the course "Mathematical Structures of Deep
-	> Neural Networks" by Jan Gerken hosted together by the Chalmers
-	> Univeristy of Technology and the Gothenburg University.
-       Click on next, confirm your contact details and submit. You should
-       receive an e-mail from *Google Cloud Support* to your GMail address
-       about the request. **The request will take up to two business days to be
-       processed and then up to five business days to be increased, so account
-       for that time!** You can proceed however without the quota increase, but
-       you will not be able to launch jobs which require GPUs.
+	a request description you can enter
+		> It will be used for the course "Mathematical Structures of Deep
+ 		> Neural Networks" by Jan Gerken hosted together by the Chalmers
+		> Univeristy of Technology and the Gothenburg University.
+
+   		Click on next, confirm your contact details and submit. You should
+   		receive an e-mail from *Google Cloud Support* to your GMail address
+       		about the request. **The request will take up to two business days to be
+       		processed and then up to five business days to be increased, so account
+       		for that time!** You can proceed however without the quota increase, but
+       		you will not be able to launch jobs which require GPUs.
 
 ### Setting up the Vertex AI Python SDK
 
