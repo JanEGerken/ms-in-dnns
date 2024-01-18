@@ -25,7 +25,7 @@ Then, load the weights trained on ImageNet which are available in torchvision. Y
 
 As discussed in Lecture 4, it is not hard to find images which fool a well-trained classifier into giving the wrong prediction, even with no perceptible difference to a correctly classified image. This is known as adversarial vulnerability. In this execise, you will compute adversarial examples for the VGG-16 model you trained on CIFAR-10.
 
-Write a script `adv_attacks.py` which is part of the `cifar10_net` package and logs to a new WandB project. For data loading, you can import the data module from the package and you can load a training checkpoint by using the `load_from_checkpoint` method of the `LightningModule`.
+Write a script `adv_attacks.py` which is part of the `cifar10_net` package and logs to a new WandB project. For data loading, you can import the data module from the package and you can load a training checkpoint by using the `load_from_checkpoint` classmethod of the `LightningModule` class.
 
 Your script should have the following `argparse` arguments:
 - `--data-root` for the directory where to find the CIFAR10 data
