@@ -10,3 +10,4 @@ For each lecture about implementations, there is a separate directory with links
 - [Lecture C](/lecture_c) and [Assignment C](/lecture_c/assignment_c.md)
 - [Lecture D](/lecture_d) and [Assignment D](/lecture_d/assignment_d.md)
 - [Lecture E](/lecture_e) and [Assignment E](/lecture_e/assignment_e.md)
+- [Lecture F](/lecture_f) and [Assignment F](/lecture_f/assignment_f.md)
