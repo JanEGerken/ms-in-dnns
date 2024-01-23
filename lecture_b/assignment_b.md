@@ -49,7 +49,7 @@ in the notation of Lecture 2. Write a function `ridge_fit_poly` which performs r
 - A float `lamb` for the regularization parameter
 and return a numpy array of shape `(1, k+1)` with the weights of the fitted polynomial.
 
-Now perform a two-dimensional hyperparameter optimization using grid search: For each combination of `k` in `list(range(1, 21))` and `lamb` in `10 ** np.linspace(-5, 0, 20)`, perform a ridge regression fit on the training data in $[0,4\pi]$ and compute the MSE on the test data. Then, plot the logarithms of the MSEs in a two-dimensional grid for the different values of `k` and `lamb` using `mathplotlib.pyplot.imshow`.
+Now perform a two-dimensional hyperparameter optimization using grid search: For each combination of `k` in `list(range(1, 21))` and `lamb` in `10 ** np.linspace(-5, 0, 20)`, perform a ridge regression fit on the training data in $[0,4\pi]$ and compute the MSE on the test data. Then, plot the logarithms of the MSEs in a two-dimensional grid for the different values of `k` and `lamb` using `matplotlib.pyplot.imshow`.
 
 Again, try a few different random seeds to get a feeling for the variance in your plot. Increase the amount of test data by a factor of 100 and see how the plot changes. Also increase the training data by a factor of 100 and see what happens. Discuss your results.
 
