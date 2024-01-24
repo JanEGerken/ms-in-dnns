@@ -2,7 +2,10 @@
 
 ## 1. Polynomial regression in PyTorch (25 Points)
 
-In this execrices, you will study the polynomial regression problem on the sine we considered in Assignment B again. However, instead of using the closed-form solution for linear regression, we want to experiment with optimizing the MSE loss using gradient descent in PyTorch.
+In this execrices, you will study the polynomial regression problem on the sine we considered in
+Assignment B again. However, instead of using the closed-form solution for linear regression, we
+want to experiment with optimizing the MSE loss using gradient descent in PyTorch. There is no test
+routine for this task.
 
 ### 1.a Gradient descend and initialization (10 Points)
 Implement the polynomial regression problem from Assignment B in PyTorch. For this entire exercise, we will fix the order of the polyonmial to be 3 (i.e. four weights need to be determined). As training data use
@@ -18,15 +21,20 @@ Reimplement the closed-form solution for the polynomial regression in PyTorch. T
 
 ### 1.b Different initialization and optimization algorithms (15 Points)
 
-You will see that it is not easy to solve this optimization problem using gradient descent. Explain why (hint: compute the Hessian of the loss). One way to make the problem easier is to initialize the weights as $0.1^k$ for the $x^k$ term. Another strategy to obtain a better solution is to use gradient descent with momentum. Find a good combination of learning rate and momentum which works well for this problem and report the final loss after 100 optimization steps. Plot the loss against steps and the final optimized polynomial.
+You will see that it is not easy to solve this optimization problem using gradient descent. Explain
+why (hint: compute the Hessian of the loss). One way to make the problem easier is to initialize the
+weights as $0.1^k$ for the $x^k$ term. Another strategy to obtain a better solution is to use
+gradient descent with momentum. Try the suggested initialization scheme and find a good combination of learning rate and momentum which works well for this problem and report the final loss after 100 optimization steps. Plot the loss against steps and the final optimized polynomial.
 
-Next, try using the Adam optimizer to solve this problem. Find a good learning rate, plot the loss against steps and the final fit. Report the final loss.
+Next, try using PyTorch's Adam optimizer to solve this problem. Find a good learning rate, plot the loss against steps and the final fit. Report the final loss.
 
 PyTorch includes an implementation of the second-order [Limited-Memory BFGS algorithm](https://en.wikipedia.org/wiki/Limited-memory_BFGS) under `torch.optim.LBFGS` which computes an approximation to the inverse of the Hessian. Use this optimizer to find the best-fit polynomial, report the final loss and plot the loss against steps as well as the final fit. Discuss your results.
 
 ## 2. Neural network training in numpy (35 Points)
 
-In this exercise, you will write a Python script `numpy_nn.py` which implements and trains a simple neural network in NumPy, illustrating what PyTorch does with its autograd system.
+In this exercise, you will write a Python script `numpy_nn.py` which implements and trains a simple
+neural network in NumPy, illustrating what PyTorch does with its autograd system. Check your code by
+using the test suite.
 
 ### 2.a Backpropagation in NumPy (20 Points)
 Implement a linear layer similar to `torch.nn.Linear` in numpy. The linear layer should be a class `NPLinear` with attributes
@@ -48,7 +56,7 @@ Next, write a class `NPMSELoss` for the MSE loss in a similar fashion. It should
 
 Your gradients should be computed in such a way that `NPLinear.backward` on the gradient computed by the loss sets the gradients of the weights and biases to the correct values.
 
-Finally, we need a nonlinearty. Implement ReLU in numpy as a class NPReLU which, as the loss, has two methods
+Finally, we need a nonlinearty. Implement ReLU in numpy as a class `NPReLU` which, as the loss, has two methods
 - `forward` which accepts an array of inputs of shape `(batch, channels)` and returns the ReLU of that input
 - `backward` which accepts an array of loss-gradients of shape `(batch, channels)` and returns the loss-gradient w.r.t. the input of the ReLU layer.
 
