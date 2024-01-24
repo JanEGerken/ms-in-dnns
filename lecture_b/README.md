@@ -83,12 +83,11 @@ In the `launch_vertex_job.py` script at the root of the `ms-in-dnns` directory, 
 - `N_GPUS` specifies the numbers of GPUs to use. You can set it to 0 for testing purposes if your quota increase has not yet been approved.
 
 Furthermore, create a new file `wandb_key.json` in the root directory and
-insert
+insert a nonempty string, e.g.
 ```json
-{
-}
+"x"
 ```
-(empty *json* structure). We will later use this.
+We will later fill this with something meaningful.
 
 ### Launching jobs
 Jobs can be submitted to the Google Cloud hardware either as a Python script or as a package. In both cases, the submission is done via the [`launch_vertex_job.py`](/launch_vertex_job.py) script. To get an overview of the options, run
