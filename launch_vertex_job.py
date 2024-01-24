@@ -16,6 +16,7 @@ WANDB_KEY = json.load(open("wandb_key.json"))
 CREDENTIALS = service_account.Credentials.from_service_account_file("credentials.json")
 CONTAINER = "europe-docker.pkg.dev/vertex-ai/training/pytorch-gpu.1-13.py310:latest"
 N_GPUS = 1
+DATETIME_FMT = "%Y-%m-%d_%H%M%S"
 
 aiplatform.init(
     # your Google Cloud Project ID or number
@@ -53,7 +54,7 @@ def upload_blob(source_file_name, destination_blob_name):
 
 
 def launch_script_job(args):
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    timestamp = datetime.now().strftime(DATETIME_FMT)
     log_path = os.path.join(BUCKET.replace("gs://", "/gcs/"), f"{args.name}_{timestamp}", "log.txt")
     requirements = [
         "torch==1.13",
@@ -90,7 +91,7 @@ def launch_script_job(args):
 
 
 def launch_package_job(args):
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    timestamp = datetime.now().strftime(DATETIME_FMT)
     log_path = os.path.join(
         BUCKET.replace("gs://", "/gcs/"),
         "custom-training-python-package",
