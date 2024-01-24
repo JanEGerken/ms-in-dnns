@@ -2,6 +2,7 @@ import os
 import argparse
 import subprocess
 from datetime import datetime
+from pathlib import PurePath, PurePosixPath
 import json
 
 from google.cloud import aiplatform, storage
@@ -55,7 +56,7 @@ def upload_blob(source_file_name, destination_blob_name):
 
 def launch_script_job(args):
     timestamp = datetime.now().strftime(DATETIME_FMT)
-    log_path = os.path.join(BUCKET.replace("gs://", "/gcs/"), f"{args.name}_{timestamp}", "log.txt")
+    log_path = PurePosixPath(BUCKET.replace("gs://", "/gcs/"), f"{args.name}_{timestamp}", "log.txt")
     requirements = [
         "torch==1.13",
         "lightning==2.1.2",
@@ -72,7 +73,7 @@ def launch_script_job(args):
         display_name=args.name,
         script_path=args.path,
         environment_variables={
-            "LOG_PATH": log_path,
+            "LOG_PATH": str(log_path),
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
         },
@@ -92,7 +93,7 @@ def launch_script_job(args):
 
 def launch_package_job(args):
     timestamp = datetime.now().strftime(DATETIME_FMT)
-    log_path = os.path.join(
+    log_path = PurePosixPath(
         BUCKET.replace("gs://", "/gcs/"),
         "custom-training-python-package",
         args.name,
@@ -107,20 +108,21 @@ def launch_package_job(args):
             "setup.py",
             "sdist",
             "--formats=gztar",
-            "--dist-dir=" + os.path.join("dist", timestamp),
+            "--dist-dir=" + str(PurePath("dist", timestamp)),
         ],
         cwd=args.directory,
     )
 
-    dist_dir = os.path.join(args.directory, "dist", timestamp)
+    dist_dir = PurePath(args.directory, "dist", timestamp)
     candidates = []
-    for entry in os.scandir(dist_dir):
+    for entry in dist_dir.iterdir():
         if ".tar.gz" in entry.name:
-            candidates.append(entry.path)
+            candidates.append(entry)
     assert len(candidates) == 1, f"found more than one .tar.gz-file in {dist_dir}: {candidates}"
-    source_name = os.path.basename(candidates[0])
-    destination_blob_name = f"custom-training-python-package/{args.name}/{timestamp}/{source_name}"
-    python_package_gcs_uri = upload_blob(candidates[0], destination_blob_name)
+    source_name = candidates[0].name
+    destination_blob_name = PurePosixPath("custom-training-python-package", f"{args.name}",
+                                          f"{timestamp}/{source_name}")
+    python_package_gcs_uri = upload_blob(str(candidates[0]), str(destination_blob_name))
     python_module_name = args.task_module
 
     print(f"Custom Training Python Package is uploaded to: {python_package_gcs_uri}")
@@ -139,7 +141,7 @@ def launch_package_job(args):
         replica_count=1,
         args=args.args,
         environment_variables={
-            "LOG_PATH": log_path,
+            "LOG_PATH": str(log_path),
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
         },

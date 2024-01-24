@@ -124,6 +124,12 @@ To submit the script `hello_world_vertex_ai/hello_world_script.py` with command 
 ```bash
 python3 launch_vertex_job.py script --name hello_world_script --path ./lecture_b/hello_world_vertex_ai/hello_world_script.py --requirements asciimatics --args --text1 "hello from" --text2 google
 ```
+on UNIX-like systems or
+```cmd
+python3 launch_vertex_job.py script --name hello_world_script --path .\lecture_b\hello_world_vertex_ai\hello_world_script.py --requirements asciimatics --args --text1 "hello from" --text2 google
+```
+on Windows.
+
 You will see some output in the terminal about the state of the job and links
 to the job's page on Google Cloud. It is normal to take a few minutes for the
 job to be pending before it starts. The output of your script will be saved in
@@ -175,5 +181,11 @@ To launch your package, use the `package` option to `launch_vertex_job.py` and s
 ```bash
 python3 launch_vertex_job.py package --name hello_world_package --directory ./lecture_b/hello_world_vertex_ai --task-module hello_world.main --args --text1 "hello from" --text2 google
 ```
+on UNIX-like systems or
+```bash
+python3 launch_vertex_job.py package --name hello_world_package --directory .\lecture_b\hello_world_vertex_ai --task-module hello_world.main --args --text1 "hello from" --text2 google
+```
+on Windows
+
 
 The output of your script is written to a text file in the same directory in your storage bucket, to which the launcher uploads the source distribution. You can find it under "Package locations" in the job's detail page.
