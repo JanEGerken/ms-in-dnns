@@ -2,7 +2,7 @@ import os
 import argparse
 import subprocess
 from datetime import datetime
-from pathlib import PurePath, PurePosixPath
+from pathlib import Path, PurePath, PurePosixPath
 import json
 
 from google.cloud import aiplatform, storage
@@ -113,7 +113,7 @@ def launch_package_job(args):
         cwd=args.directory,
     )
 
-    dist_dir = PurePath(args.directory, "dist", timestamp)
+    dist_dir = Path(args.directory, "dist", timestamp)
     candidates = []
     for entry in dist_dir.iterdir():
         if ".tar.gz" in entry.name:
