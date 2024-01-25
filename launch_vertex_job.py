@@ -49,7 +49,8 @@ def upload_blob(source_file_name, destination_blob_name):
 
     blob.upload_from_filename(source_file_name)
 
-    destination_file_name = os.path.join(BUCKET, destination_blob_name)
+    destination_file_name = "gs://" + str(PurePosixPath(BUCKET.split("gs://")[1],
+                                                        destination_blob_name))
 
     return destination_file_name
 
