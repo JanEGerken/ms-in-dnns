@@ -105,13 +105,13 @@ def launch_package_job(args):
     print("Creating source distribuion")
     subprocess.run(
         [
-            "python3",
+            "python",
             "setup.py",
             "sdist",
             "--formats=gztar",
             "--dist-dir=" + str(PurePath("dist", timestamp)),
         ],
-        cwd=args.directory,
+        cwd=PurePath(args.directory), check=True
     )
 
     dist_dir = Path(args.directory, "dist", timestamp)
