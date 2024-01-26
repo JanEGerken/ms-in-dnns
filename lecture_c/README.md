@@ -2,6 +2,9 @@
 
 Relevant documentation:
 
+## OOP in Python
+If you need a refresher for object oriented programming in Python, have a look at [this](https://realpython.com/python3-object-oriented-programming/) article
+
 ## Automatic differentiation in PyTorch
 - [AD basics in PyTorch](https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html)
 - [Autograd details](https://pytorch.org/docs/1.13/notes/autograd.html)
