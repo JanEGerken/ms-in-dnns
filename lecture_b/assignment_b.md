@@ -10,7 +10,12 @@ In this exercise, you can see for yourself how a too flexible model can overfit 
 
 ### 2.a Basic plotting in Matplotlib (5 Points)
 
-Write a Python script `poly_fitting.py` which plots a sine between 0 and $2\pi$ and 15 training data points, reproducing the plots from Lecture 2. The noise is sampled from a Gaussian distribution with a standard deviation of 0.1 and the data points are uniformly distributed in $[0,2\pi]$. Also generate 10 test data points from the same distribution. You can find some basic examples of how to use Matplotlib [here](https://matplotlib.org/stable/plot_types/index.html).
+Write a Python script `poly_fitting.py` which plots a sine between 0 and $2\pi$ and 15 training data
+points, reproducing the plots from Lecture 2. The noise is sampled from a Gaussian distribution with
+a standard deviation of 0.1 and the data points are uniformly distributed in $[0,2\pi]$. Also
+generate 10 test data points from the same distribution and add them to the plot. Add a legend. You
+can find some basic examples of how to use Matplotlib
+[here](https://matplotlib.org/stable/plot_types/index.html).
 
 ### 2.b Polynomial regression (10 Points)
 
@@ -26,7 +31,7 @@ Write a function `mse_poly` which returns the mean squared error of a fit polyno
 - A numpy array `y` of shape `(N,)` with the y-values of the test data
 - A numpy array `W` of shape `(1, k)` with the weights of the polynomial
 
-Compute the MSE of the polynomial you have fitted and add it to the legend of the plot.
+Compute the MSE w.r.t. the test data of the polynomial you have fitted and add it to the legend of the plot.
 
 ### 2.c Overfitting (5 Points)
 
@@ -64,4 +69,5 @@ Write a function `perform_cv` to evaluate a combination of hyperparameters using
 
 and return the CV estimate of the MSE.
 
-Now choose a set of hyperparameters (i.e. order of the polynomial and regression parameter) which performs best on the test data. Generate a dataset of `120` samples and evaluate the hyperparameters using cross-validation with all fold numbers which are divisors of `120`. Repeat this 100 times with new datasets and compute the mean and standard deviation over draws for each fold number. Then plot the mean cross-validated MSE against the number of folds, together with a band of + and - its standard deviation. For the lower boundary, clip the values to zero since the MSE is positive. Observe how mean and standard deviation behave as you increase the number of folds and explain your observations.
+Now choose a set of hyperparameters (i.e. order of the polynomial and regression parameter) which
+performs best on the test data. Generate a dataset of `120` samples in $[0,4\pi]$ and evaluate the hyperparameters using cross-validation with all fold numbers which are divisors of `120`. Repeat this 100 times with new datasets and compute the mean and standard deviation over draws for each fold number. Then plot the mean cross-validated MSE against the number of folds, together with a band of + and - its standard deviation. For the lower boundary, clip the values to zero since the MSE is positive. Observe how mean and standard deviation behave as you increase the number of folds and explain your observations.

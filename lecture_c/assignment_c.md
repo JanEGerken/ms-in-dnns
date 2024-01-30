@@ -45,7 +45,10 @@ Implement a linear layer similar to `torch.nn.Linear` in numpy. The linear layer
 
 (plus any more which you might need), as well as methods
 - `forward`, which accepts a batch of inputs of shape `(batch, in_channels)` and returns the output $Wx+b$ of the layer,
-- `backward`, which accepts the gradient of the loss with respect to the output on a batch of inputs of shape `(batch, out_channels)` and sets `W_grad` and `b_grad` to the gradients of the loss w.r.t. `W` and `b`, summed over samples in the batch
+- `backward`, which accepts the gradient of the loss with respect to the output on a batch of inputs
+  of shape `(batch, out_channels)` and sets `W_grad` and `b_grad` to the gradients of the loss
+  w.r.t. `W` and `b`, summed over samples in the batch. Additionally, return the gradient of the
+  loss w.r.t. the layer's input.
 - `gd_update` which accepts a learning rate (float) and performs a gradient descent step with that learning rate on the weights and biases
 
 plus the constructor which should accept the number of input- and output channels. For the initalization of the parameters, use the same procedure that PyTorch uses (hint: check the implementation [here](https://pytorch.org/docs/stable/_modules/torch/nn/modules/linear.html#Linear)).
