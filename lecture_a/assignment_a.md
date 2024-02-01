@@ -1,7 +1,9 @@
 ## Assignment A (15 Points)
 
 ### Task 1: Setting up the compute environment (5 Points)
-Fork this repo into your own GitHub account, clone it to your local computer and install the virtual environment as described in [README.md](README.md).
+Fork this repo into your own GitHub account, clone it to your local computer and install the virtual
+environment as described in [README.md](README.md). All assignments should be done with this virtual
+environment. If you think you need additional packages, ask for permission.
 
 You can check if the packages can be imported into Python by running the script `test_assignment_a.py`.
 

@@ -39,7 +39,7 @@ Now, we want to study overfitting in this context. To this end, expand the domai
 
 1. Fit polynomials with $k=1,\dots,15$ and plot their MSEs against k with a logarithmic MSE-axis. Run your script a few times with different random seeds (if you have not set the seed explicitly, this means that you can just run your script several times) and see how the plot changes. Discuss what you observe.
 2. Select a `k` which you think worked best across different seeds and plot the
-   corresponding polynomial fit for one representative training data sample
+   corresponding polynomial fit for one representative training data sample in the same way as in *2.b*
 
 ### 2.d Ridge regression (15 Points)
 
