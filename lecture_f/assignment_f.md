@@ -43,12 +43,12 @@ Research project never work out as planned - this lies in the nature of research
 
 ## Normalizing flows (25 Points)
 
-Use the provided package `mnist_flow` to train a normalizing flow on MNIST as discussed in the lecture. Training for 200 epochs will take about 4:15h on Google Cloud. Both of the following tasks can be performed on the CPU. Hence, download the best checkpoint from your training run from the Google Cloud Storage Bucket and load the checkpoint of the trained model for the following tasks.
+Use the provided package `mnist_flow` to train a normalizing flow on MNIST as discussed in the lecture for 200 epochs with gradient clipping with a clipping value of 1.0 (you can use the `Trainer` option for this). The training will take about 4:15h on Google Cloud. Both of the following tasks can be performed on the CPU. Hence, download the best checkpoint from your training run from the Google Cloud Storage Bucket and load the checkpoint of the trained model for the following tasks.
 
 
 ### Interpolation (15 Points)
 
-For a well-trained normalizing flow is distribution of samples in the base space approximately Gaussian. Due to the spherical symmetry of the normal distribution, this means that performing a linear interpolation between images in the base space will likely only traverse regions of high probablility, i.e. all samples along the line connecting two samples in the base space will approximate realistic samples from the data distribution. We want to try this out in this exercise.
+For a well-trained normalizing flow is the distribution of samples in the base space approximately Gaussian. Due to the spherical symmetry of the normal distribution, this means that performing a linear interpolation between images in the base space will likely only traverse regions of high probablility, i.e. all samples along the line connecting two samples in the base space will approximate realistic samples from the data distribution. We want to try this out in this exercise.
 
 Rewrite the `mnist_flow` package such that
 - you can initialize a model by loading a checkpoint from disk.
