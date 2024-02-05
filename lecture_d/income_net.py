@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import sys
 import json
+import pathlib as pl
 
 import torch
 import torch.nn as nn
@@ -70,10 +71,11 @@ def main(args):
     torch.manual_seed(0xDEADBEEF)
 
     if "LOG_PATH" in os.environ:
-        data_root = "/gcs/msindnn_staging/adult_data"
+        data_file = pl.PurePosixPath("/gcs", "msindnn_staging", "adult_data", "adult.data")
     else:
-        data_root = "../data/adult_data"
-    entire_dataset = AdultDataset(os.path.join(data_root, "adult.data"))
+        data_file = pl.PurePath("..", "data", "adult_data", "adult.data")
+
+    entire_dataset = AdultDataset(str(data_file))
     train_dataset, val_dataset = random_split(
         entire_dataset, [args.train_share, 1 - args.train_share]
     )
