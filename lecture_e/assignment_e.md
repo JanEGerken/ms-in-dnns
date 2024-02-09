@@ -19,6 +19,17 @@ cifar10_net
 └── setup.py
 ```
 
+In order to use your package while still developing it, you have to install it in your *venv* in
+*editable* mode. For this, execute the following in the root of your package (i.e. in the folder
+where the `setup.py` file is located):
+
+```bash
+pip install -e .
+```
+
+For more information, see the [Python Packaging User
+Guide](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode).
+
 Log the training- and validation accuracy as well as -loss during training and separately for the best epoch (according to validation accuracy).
 
 ### 1.b Confusion matrix (10 Points) 
