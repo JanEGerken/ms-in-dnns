@@ -14,11 +14,15 @@ In the lecture, we only looked at training runs with 10 epochs. Train the model 
 
 To get a better understanding of what the model is doing, compute the [confusion
 matrix](https://en.wikipedia.org/wiki/Confusion_matrix), normalized over targets (i.e. the sums
-along rows should be one). Use the function `wandb.plot.confusion_matrix` documented [here](https://docs.wandb.ai/guides/track/log/plots#model-evaluation-charts) to compute and log the confusion matrix. Hint: After one epoch, you should obtain the confusion matrix
+along rows should be one). Use the function `wandb.plot.confusion_matrix` documented
+[here](https://docs.wandb.ai/guides/track/log/plots#model-evaluation-charts) to compute and log the
+confusion matrix. Hint: After one epoch, you should obtain a confusion matrix similar to
 ```
 [[0.9745, 0.0255],
  [0.7589, 0.2411]]
 ```
+(the exact values depend on various factors as can be read
+[here](https://pytorch.org/docs/stable/notes/randomness.html)).
 Compute the confusion matrix after 10 and after 50 training epochs. Interpret your results.
 
 Using the insights you have gained, improve the training procedure so that the same model reaches a validation performance of about 84% after 200 epochs. Try the following three strategies:
@@ -106,7 +110,11 @@ Next, add an `argparse` option called `--batchnorm` to add a `torch.nn.BatchNorm
 
 Next, add an option `--dropout` for a `torch.nn.Dropout` layer with dropout probability `0.3` after each pooling layer and after the ReLU layers in the fully connected classifier. Train this model with batch norm and dropout for 60 epochs and interpret the results.
 
-Finally, add an option `--augment` for data augmentation. Augment the **training** data using `torchvision.transforms` with random horizontal- and vertical flips, random rotations by -10 to 10 degrees, random resized crops with a scale of 0.8 to 1.0 and an aspect ratio of 0.8 to 1.2 and a color jittering with brightness factor, contrast factor, saturation factor and hue factor in $[0.8, 1.2]$. Train again for 60 epochs and interpret the results. Also try combining data augmentation and dropout.
+Finally, add an option `--augment` for data augmentation. Augment the **training** data using
+`torchvision.transforms` with random horizontal- and vertical flips, random rotations by -10 to 10
+degrees, random resized crops with a scale of 0.8 to 1.0 and an aspect ratio of 0.8 to 1.2 and
+a color jittering with brightness factor, contrast factor and  saturation factor in $[0.8, 1.2]$ and
+hue factor of $[-0.2, 0.2]$. Train again for 60 epochs and interpret the results. Also try combining data augmentation and dropout.
 
 Summarize your results in a WandB report, including the table of predicted results and the learning curves.
 
