@@ -1,9 +1,10 @@
 import os
 import json
+import pathlib as pl
 
 
 def get_wandb_key():
-    json_file = "../wandb_key.json"
+    json_file = str(pl.PurePath("..", "wandb_key.json"))
     if os.path.isfile(json_file):
         with open(json_file, "r") as f:
             return json.load(f)

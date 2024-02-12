@@ -36,7 +36,31 @@ Log the training- and validation accuracy as well as -loss during training and s
 Furthermore, implement logging of the confusion matrix on the best epoch, similar to what you did using pure PyTorch in the previous assignment. In particular
 - Use torchmetrics to compute the confusion matrix during the test step.
 - Using a hook at the end of the test epoch, log the confusion matrix using a direct call to `wandb` (i.e. not `self.log`).
-- Have a look at the last lines of the implementation of `wandb.plot.confusion_matrix` [here](https://github.com/wandb/wandb/blob/6a211b19f02ee7c6b87b82eafd5789c4ba3739ec/wandb/plot/confusion_matrix.py#L82) to see how to log the computed confusion matrix without having wandb computing it from predictions and targets.
+- One can log the computed confusion matrix without having wandb computing it from predictions and
+  targets, which is apparent from the last lines of the implementation of
+  `wandb.plot.confusion_matrix`
+  [here](https://github.com/wandb/wandb/blob/6a211b19f02ee7c6b87b82eafd5789c4ba3739ec/wandb/plot/confusion_matrix.py#L82).
+  Inspired by those lines, a working example can look like this
+
+  ```python
+  class_names = self.trainer.datamodule.CLASS_NAMES
+  data = []
+  for i in range(10):
+      for j in range(10):
+          data.append([class_names[i], class_names[j], counts[i, j]])
+  fields = {"Actual": "Actual", "Predicted": "Predicted", "nPredictions": "nPredictions"}
+  conf_mat = wandb.plot_table(
+      "wandb/confusion_matrix/v1",
+      wandb.Table(columns=["Actual", "Predicted", "nPredictions"], data=data),
+      fields,
+      {"title": "confusion matrix on best epoch"},
+      split_table=True,
+  )
+  wandb.log({"best/conf_mat": conf_mat})
+  ```
+
+  Here, `counts` is a 2D array representing the entries of the non-normalized confusion matrix
+  that is available from torchmetrics.
 
 ### 1.c Finetune pretrained VGG-16 (20 Points)
 Torchvision includes many model architectures for computer vision and has trained weights for these models available to download, have a look [here](https://pytorch.org/vision/0.14/models.html) for the documentation.
@@ -45,8 +69,11 @@ The VGG-16 model on which our CIFAR-classifier is based, is available in a versi
 
 Write a new `torch.nn.Module` model which uses the VGG-16 model with batch norm mentioned above for feature extraction. You can see the general structure of this model [here](https://github.com/pytorch/vision/blob/71b27a00eefc1b169d1469434c656dd4c0a5b18d/torchvision/models/vgg.py#L35). To account for the smaller images in CIFAR, replace the `avgpool` layer with an identity layer and to account for the smaller number of classses, replace the fully-connected classifier with the classifier we have been using so far in `CIFAR10Net`. Train this model from scratch as a baseline for 60 epochs, without dropout but with data augmentation.
 
-Then, load the weights trained on ImageNet which are available in torchvision. You should set the
-torch cache directory to the `torch_cache` directory in the root of this repository and a similar directory on Google Cloud using `torch.hub.set_dir`. Train the model again using the pretrained weights for 60 epochs (without dropout but with data augmentation again) and compare the performances. Discuss your results in a WandB report.
+Then, load the weights trained on ImageNet which are available in torchvision. This is done by
+setting the torch cache directory to the `torch_cache` directory in the root of this repository and
+a similar directory on Google Cloud using `torch.hub.set_dir` (this is already provided in the
+template). Train the model again using the pretrained weights for 60 epochs (without dropout but
+with data augmentation again) and compare the performances. Discuss your results in a WandB report.
 
 ## 2. Adversarial Attacks (20 Points)
 

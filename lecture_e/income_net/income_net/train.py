@@ -1,7 +1,9 @@
 from datetime import datetime
 import os
 import sys
+import pathlib as pl
 
+import torch
 import wandb
 from lightning.pytorch.loggers import WandbLogger
 from lightning.pytorch import Trainer, seed_everything
@@ -22,6 +24,7 @@ if "LOG_PATH" in os.environ:
 def main(args):
 
     seed_everything(0xDEADBEEF, workers=True)
+    torch.hub.set_dir(args.torch_cache_dir)
 
     if "LOG_PATH" in os.environ:
         wandb_save_dir = os.path.dirname(os.environ["LOG_PATH"])
@@ -62,14 +65,24 @@ if __name__ == "__main__":
 
     parser.add_lightning_class_args(AdultDataModule, "data")
     if "LOG_PATH" in os.environ:
-        parser.set_defaults({"data.data_root": "/gcs/msindnn_staging/adult_data"})
+        bucket_name = os.environ["BUCKET"].split("gs://")[1]
+        parser.set_defaults({"data.data_root": str(pl.PurePosixPath("/gcs", bucket_name,
+                                                                    "adult_data"))})
     else:
-        parser.set_defaults({"data.data_root": "../../../data/adult_data"})
+        parser.set_defaults({"data.data_root": str(pl.PurePath("..", "..", "..", "data",
+                                                               "adult_data"))})
 
     if "CREATION_TIMESTAMP" in os.environ:
         timestamp = os.environ["CREATION_TIMESTAMP"]
     else:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     parser.add_argument("--run-name", type=str, default=timestamp)
+
+    if "LOG_PATH" in os.environ:
+        torch_cache_dir = str(pl.PurePosixPath("/gcs", os.environ["BUCKET"], "torch_cache"))
+    else:
+        torch_cache_dir = str(pl.PurePath("..", "..", "..", "torch_cache"))
+    parser.add_argument("--torch-cache-dir", type=str, default=torch_cache_dir)
+
     args = parser.parse_args()
     main(args)

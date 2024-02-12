@@ -77,6 +77,7 @@ def launch_script_job(args):
             "LOG_PATH": str(log_path),
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
+            "BUCKET": BUCKET,
         },
         machine_type="n1-standard-4",
         accelerator_type="NVIDIA_TESLA_T4",
@@ -145,6 +146,7 @@ def launch_package_job(args):
             "LOG_PATH": str(log_path),
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
+            "BUCKET": BUCKET,
         },
     )
     return job
