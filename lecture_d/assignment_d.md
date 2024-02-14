@@ -108,7 +108,9 @@ Train the model specified above with batch size 32 for a few epochs and observe 
 
 Next, add an `argparse` option called `--batchnorm` to add a `torch.nn.BatchNorm2d` layer after each convolutional layer. Train the model for 60 epochs and interpret the training- and validation loss curves. This run should take about 1h to complete.
 
-Next, add an option `--dropout` for a `torch.nn.Dropout` layer with dropout probability `0.3` after each pooling layer and after the ReLU layers in the fully connected classifier. Train this model with batch norm and dropout for 60 epochs and interpret the results.
+Next, add an option `--dropout` for a `torch.nn.Dropout` layer with dropout probability `0.3` after
+each pooling layer and after the ReLU layers in the fully connected classifier. Train this model
+with batch norm and dropout for 60 epochs and interpret the results and training and validation loss curves.
 
 Finally, add an option `--augment` for data augmentation. Augment the **training** data using
 `torchvision.transforms` with random horizontal- and vertical flips, random rotations by -10 to 10

@@ -30,7 +30,11 @@ pip install -e .
 For more information, see the [Python Packaging User
 Guide](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode).
 
-Log the training- and validation accuracy as well as -loss during training and separately for the best epoch (according to validation accuracy).
+Add the functionality to log the training- and validation accuracy as well as -loss during training
+and separately for the best epoch (according to validation accuracy). Then train the model from
+scratch for 60 epochs (without dropout but with data augmentation and batchnorm). Add the loss
+and validation plots in a WandB report.
+
 
 ### 1.b Confusion matrix (10 Points) 
 Furthermore, implement logging of the confusion matrix on the best epoch, similar to what you did using pure PyTorch in the previous assignment. In particular
@@ -67,7 +71,14 @@ Torchvision includes many model architectures for computer vision and has traine
 
 The VGG-16 model on which our CIFAR-classifier is based, is available in a version with batch norm [here](https://pytorch.org/vision/0.14/models/generated/torchvision.models.vgg16_bn.html). However, the model was designed for and trained on the ImageNet dataset which features larger images in 1000 classes. Therefore, we need to adapt the original VGG-16 to fit our purpose.
 
-Write a new `torch.nn.Module` model which uses the VGG-16 model with batch norm mentioned above for feature extraction. You can see the general structure of this model [here](https://github.com/pytorch/vision/blob/71b27a00eefc1b169d1469434c656dd4c0a5b18d/torchvision/models/vgg.py#L35). To account for the smaller images in CIFAR, replace the `avgpool` layer with an identity layer and to account for the smaller number of classses, replace the fully-connected classifier with the classifier we have been using so far in `CIFAR10Net`. Train this model from scratch as a baseline for 60 epochs, without dropout but with data augmentation.
+Write a new `torch.nn.Module` model which uses the VGG-16 model with batch norm mentioned above for
+feature extraction. You can see the general structure of this model
+[here](https://github.com/pytorch/vision/blob/71b27a00eefc1b169d1469434c656dd4c0a5b18d/torchvision/models/vgg.py#L35).
+To account for the smaller images in CIFAR, replace the `avgpool` layer with an identity layer and
+to account for the smaller number of classses, replace the fully-connected classifier with the
+classifier we have been using so far in `CIFAR10Net` but with an input dimension of 512 in the first
+linear layer to match the dimension of the features. Train this model from scratch as a baseline for
+60 epochs, without dropout but with data augmentation.
 
 Then, load the weights trained on ImageNet which are available in torchvision. This is done by
 setting the torch cache directory to the `torch_cache` directory in the root of this repository and
