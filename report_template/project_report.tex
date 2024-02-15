@@ -1,0 +1,278 @@
+%%%%%%%% ICML 2023 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2023} with \usepackage[nohyperref]{icml2023} above.
+\usepackage{hyperref}
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage[accepted]{icml2023}
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Project Report Template}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Project Report Template for \\
+           Mathematical Structures in Deep Neural Networks (MMA440)}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2023
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Firstname Lastname}{}
+\end{icmlauthorlist}
+
+%\icmlaffiliation{yyy}{Department of XXX, University of YYY, Location, Country}
+
+%\icmlcorrespondingauthor{Firstname1 Lastname1}{first1.last1@xxx.edu}
+%\icmlcorrespondingauthor{Firstname2 Lastname2}{first2.last2@www.uk}
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+%\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+%\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\begin{abstract}
+Use this template to write your project report. It uses the ICML 2023 layout.
+\end{abstract}
+
+\section{Structure of your report}
+
+Your report should be at most five pages long (excluding references and appendices) and have the
+following basic structure. You can deviate from this structure if you think something else is more
+appropriate for your project.
+
+\paragraph{Abstract} Here you should write a short paragraph outlining what the context of your
+project is, what you did and what the results were. If you need inspiration, look at some published
+machine learning papers to see what abstracts typically look like.
+
+\paragraph{Introduction} In this section you should outline the context of your project in more
+detail and summarize what you did and the results you obtained.
+
+\paragraph{Background} Here you can go into detail about the theoretical background of your
+project. You can e.g.\ explain the interesting properties of the architecture of the network you are
+using (e.g.\ symmetry properties, a special loss etc.) or the theoretical framework that your
+project is based on.
+
+\paragraph{Experiments} In this section, you can go into detail about what hyperparameters you used,
+what dataset you trained on, how your evaluation metrics are defined (if they are not standard) and
+what your results were.
+
+\paragraph{Conclusions} Here you can give a final short summary of your results and a brief outlook
+of what would be interesting to do next if you had more time. This section can be very short.
+
+\paragraph{Appendices} You can add as many appendices as you like e.g.\ for additional plots but the
+main part should be self-contained and highlight the most important aspects.
+
+
+\section{Environments}
+\begin{figure}[t]
+\vskip 0.2in
+\begin{center}
+\centerline{\includegraphics[width=\columnwidth]{icml_numpapers}}
+\caption{Historical locations and number of accepted papers for International
+Machine Learning Conferences (ICML 1993 -- ICML 2008) and International
+Workshops on Machine Learning (ML 1988 -- ML 1992). At the time this figure was
+produced, the number of accepted papers for ICML 2008 was unknown and instead
+estimated.}
+\label{icml-historical}
+\end{center}
+\vskip -0.2in
+\end{figure}
+
+This template comes with some predefined environments. You can use figures as illustrated in
+Figure~\ref{icml-historical}. An example for an algorithm is \cref{alg:example}.
+
+\begin{algorithm}[tb]
+   \caption{Bubble Sort}
+   \label{alg:example}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} data $x_i$, size $m$
+   \REPEAT
+   \STATE Initialize $noChange = true$.
+   \FOR{$i=1$ {\bfseries to} $m-1$}
+   \IF{$x_i > x_{i+1}$}
+   \STATE Swap $x_i$ and $x_{i+1}$
+   \STATE $noChange = false$
+   \ENDIF
+   \ENDFOR
+   \UNTIL{$noChange$ is $true$}
+\end{algorithmic}
+\end{algorithm}
+
+An example table is provided in \cref{sample-table}.
+\begin{table}[t]
+\caption{Classification accuracies for naive Bayes and flexible
+Bayes on various data sets.}
+\label{sample-table}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{tabular}{lcccr}
+\toprule
+Data set & Naive & Flexible & Better? \\
+\midrule
+Breast    & 95.9$\pm$ 0.2& 96.7$\pm$ 0.2& $\surd$ \\
+Cleveland & 83.3$\pm$ 0.6& 80.0$\pm$ 0.6& $\times$\\
+Glass2    & 61.9$\pm$ 1.4& 83.8$\pm$ 0.7& $\surd$ \\
+Credit    & 74.8$\pm$ 0.5& 78.3$\pm$ 0.6&         \\
+Horse     & 73.3$\pm$ 0.9& 69.7$\pm$ 1.0& $\times$\\
+Meta      & 67.1$\pm$ 0.6& 76.5$\pm$ 0.5& $\surd$ \\
+Pima      & 75.1$\pm$ 0.6& 73.9$\pm$ 0.5&         \\
+Vehicle   & 44.9$\pm$ 0.6& 61.5$\pm$ 0.4& $\surd$ \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table}
+
+You can use the following environments for mathematics:
+\begin{definition}
+\label{def:inj}
+A function $f:X \to Y$ is injective if for any $x,y\in X$ different, $f(x)\ne f(y)$.
+\end{definition}
+Using \cref{def:inj} we immediate get the following result:
+\begin{proposition}
+If $f$ is injective mapping a set $X$ to another set $Y$, 
+the cardinality of $Y$ is at least as large as that of $X$
+\end{proposition}
+\begin{proof} 
+Left as an exercise to the reader. 
+\end{proof}
+\cref{lem:usefullemma} stated next will prove to be useful.
+\begin{lemma}
+\label{lem:usefullemma}
+For any $f:X \to Y$ and $g:Y\to Z$ injective functions, $f \circ g$ is injective.
+\end{lemma}
+\begin{theorem}
+\label{thm:bigtheorem}
+If $f:X\to Y$ is bijective, the cardinality of $X$ and $Y$ are the same.
+\end{theorem}
+An easy corollary of \cref{thm:bigtheorem} is the following:
+\begin{corollary}
+If $f:X\to Y$ is bijective, 
+the cardinality of $X$ is at least as large as that of $Y$.
+\end{corollary}
+\begin{assumption}
+The set $X$ is finite.
+\label{ass:xfinite}
+\end{assumption}
+\begin{remark}
+According to some, it is only the finite case (cf. \cref{ass:xfinite}) that is interesting.
+\end{remark}
+%restatable
+
+You can cite papers like this: \cite{Samuel59} using BibTeX. 
+
+\bibliography{project_report}
+\bibliographystyle{icml2023}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+\onecolumn
+\section{You \emph{can} have an appendix here.}
+
+You can have as much content here as you want, even using the one-column format if you like.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018, and modified by Alexandre Bouchard in
+% 2019 and 2021 and by Csaba Szepesvari, Gang Niu and Sivan Sabato in 2022.
+% Modified again in 2023 by Sivan Sabato and Jonathan Scarlett.
+% Previous contributors include Dan Roy, Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

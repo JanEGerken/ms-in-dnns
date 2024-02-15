@@ -11,3 +11,6 @@ For each lecture about implementations, there is a separate directory with links
 - [Lecture D](/lecture_d) and [Assignment D](/lecture_d/assignment_d.md)
 - [Lecture E](/lecture_e) and [Assignment E](/lecture_e/assignment_e.md)
 - [Lecture F](/lecture_f) and [Assignment F](/lecture_f/assignment_f.md)
+
+## Project report template
+A template for the project report with a suggested structure is provided [here](/report_template/project_report.tex).
