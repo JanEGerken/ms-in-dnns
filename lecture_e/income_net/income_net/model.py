@@ -60,7 +60,6 @@ class PLIncomeModule(L.LightningModule):
         acc = (preds == torch.argmax(labels, dim=-1)).sum() / inputs.shape[0]
         self.val_metrics.update(preds, torch.argmax(labels, dim=-1))
         self.log("val/loss", loss, on_epoch=True, on_step=False)
-        self.log("val/acc_manual", acc, on_epoch=True, on_step=False)
         self.log_dict(self.val_metrics, on_epoch=True, on_step=False)
         self.log("step", float(self.current_epoch + 1), on_epoch=True, on_step=False)
 

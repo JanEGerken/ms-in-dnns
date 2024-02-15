@@ -31,9 +31,9 @@ For more information, see the [Python Packaging User
 Guide](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode).
 
 Add the functionality to log the training- and validation accuracy as well as -loss during training
-and separately for the best epoch (according to validation accuracy). Then train the model from
-scratch for 60 epochs (without dropout but with data augmentation and batchnorm). Add the loss
-and validation plots in a WandB report.
+and separately the (test-) loss and accuracy for the best epoch, (according to validation accuracy).
+Then train the model from scratch for 60 epochs (without dropout but with data augmentation and
+batchnorm). Add the loss and validation plots in a WandB report.
 
 
 ### 1.b Confusion matrix (10 Points) 
@@ -91,7 +91,8 @@ with data augmentation again) and compare the performances. Discuss your results
 As discussed in Lecture 4, it is not hard to find images which fool a well-trained classifier into
 giving the wrong prediction, even with no perceptible difference to a correctly classified image.
 This is known as adversarial vulnerability. In this exercise, you will compute adversarial examples
-for the VGG-16 model you trained from scratch on CIFAR-10.
+for the VGG-16 model you trained from scratch on CIFAR-10. Note that you find the checkpoints in the
+package folder in the Google Cloud bucket.
 
 Write a script `adv_attacks.py` which is part of the `cifar10_net` package and logs to a new WandB
 project. For data loading, you can import the data module from the package and you can load
@@ -121,6 +122,7 @@ As the source class, pick a class with high accuracy according to the confusion 
 in the previous exercise and run the attack with the defaults given above. Discuss your results in
 a WandB report. Generate it as a PDF and provide also a link to the online report in your
 submission.
+
 
 ## Upload instructions
 

@@ -79,7 +79,7 @@ if __name__ == "__main__":
     parser.add_argument("--run-name", type=str, default=timestamp)
 
     if "LOG_PATH" in os.environ:
-        torch_cache_dir = str(pl.PurePosixPath("/gcs", os.environ["BUCKET"], "torch_cache"))
+        torch_cache_dir = str(pl.PurePosixPath("/gcs", bucket_name, "torch_cache"))
     else:
         torch_cache_dir = str(pl.PurePath("..", "..", "..", "torch_cache"))
     parser.add_argument("--torch-cache-dir", type=str, default=torch_cache_dir)
