@@ -55,8 +55,8 @@ class AdultDataset(Dataset):
 
 
 def get_wandb_key():
-    json_file = "../wandb_key.json"
-    if os.path.isfile(json_file):
+    json_file = pl.Path("..", "wandb_key.json")
+    if json_file.is_file():
         with open(json_file, "r") as f:
             return json.load(f)
     elif "WANDB_KEY" in os.environ:

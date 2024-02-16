@@ -43,15 +43,28 @@ Research project never work out as planned - this lies in the nature of research
 
 ## Normalizing flows (25 Points)
 
-Use the provided package `mnist_flow` to train a normalizing flow on MNIST as discussed in the lecture for 200 epochs with gradient clipping with a clipping value of 1.0 (you can use the `Trainer` option for this). The training will take about 4:15h on Google Cloud. Both of the following tasks can be performed on the CPU. Hence, download the best checkpoint from your training run from the Google Cloud Storage Bucket and load the checkpoint of the trained model for the following tasks.
+The provided package `mnist_flow` was used to to train a normalizing flow on MNIST as discussed in
+the lecture for 200 epochs with gradient clipping with a clipping value of 1.0 (`Trainer` provides
+an option for this). Since the training takes about 4:15h on Google Cloud, the optimized weights are
+already provided in `mnist_flow_weights_trained.ckpt`. Both of the following tasks can be performed
+on the CPU. Hence, load the checkpoint of the trained model on your local computer for the following
+tasks.
 
+Again, don't forget to install the package in editable mode with `pip install -e .` in the
+`mnist_flow` root directory.
 
 ### Interpolation (15 Points)
 
-For a well-trained normalizing flow is the distribution of samples in the base space approximately Gaussian. Due to the spherical symmetry of the normal distribution, this means that performing a linear interpolation between images in the base space will likely only traverse regions of high probablility, i.e. all samples along the line connecting two samples in the base space will approximate realistic samples from the data distribution. We want to try this out in this exercise.
+For a well-trained normalizing flow the distribution of samples in the base space is approximately
+Gaussian. Due to the spherical symmetry of the normal distribution, this means that performing
+a linear interpolation between images in the base space will likely only traverse regions of high
+probability, i.e. all samples along the line connecting two samples in the base space will approximate realistic samples from the data distribution. We want to try this out in this exercise.
 
 Rewrite the `mnist_flow` package such that
-- you can initialize a model by loading a checkpoint from disk.
+- you can initialize a model by loading a checkpoint from disk. Provide an argument `--ckpt-path` to
+  select the checkpoint/weights file. Run a test step (i.e. execute the train script with 0 training
+  epochs) and have a look at the WandB logs to see the
+  output of the model.
 - all base space dimensions are returned by the `reverse=False` case of the `forward` call. Remember that the `SplitFlow` model as is only returns the dimensions which are to be transformed further. The final return value should contain as many dimensions as the input. Similarly, the `forward` method should also accept the same number of input dimensions in the `reverse=True` case. In the end, the flow should be completely reversible in this way.
 
 Perform linear interpolation between validation samples of two (different) classes in pixel space and in the base space. In the latter case, map the samples back into pixel space. Show 10 images from the interpolation, where the first corresponds to the initial sample and the last to the final sample in a different class.

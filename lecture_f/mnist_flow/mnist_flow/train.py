@@ -50,8 +50,10 @@ def main(args):
 
     trainer = Trainer(**vars(args.trainer))
     trainer.fit(model, datamodule=dm)
-    trainer.test(model, datamodule=dm, ckpt_path="best")
-    trainer.predict(model, datamodule=dm, ckpt_path="best")
+    trainer.test(model, datamodule=dm)
+    trainer.predict(model, datamodule=dm)
+    # trainer.test(model, datamodule=dm, ckpt_path="best")
+    # trainer.predict(model, datamodule=dm, ckpt_path="best")
 
 
 if __name__ == "__main__":

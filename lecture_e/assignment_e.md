@@ -32,9 +32,8 @@ Guide](https://packaging.python.org/en/latest/guides/distributing-packages-using
 
 Add the functionality to log the training- and validation accuracy as well as -loss during training
 and separately the (test-) loss and accuracy for the best epoch, (according to validation accuracy).
-Then train the model from scratch for 60 epochs (without dropout but with data augmentation and
-batchnorm). Add the loss and validation plots in a WandB report.
-
+Ensure that everything is working with a small test run. The longer run will be conducted at the end
+of 1.b.
 
 ### 1.b Confusion matrix (10 Points) 
 Furthermore, implement logging of the confusion matrix on the best epoch, similar to what you did using pure PyTorch in the previous assignment. In particular
@@ -66,6 +65,10 @@ Furthermore, implement logging of the confusion matrix on the best epoch, simila
   Here, `counts` is a 2D array representing the entries of the non-normalized confusion matrix
   that is available from torchmetrics.
 
+Then train the model from scratch for 60 epochs (without dropout but with data augmentation and
+batchnorm). Add the confusion matrix and the loss and validation plots to the WandB report.
+
+
 ### 1.c Finetune pretrained VGG-16 (20 Points)
 Torchvision includes many model architectures for computer vision and has trained weights for these models available to download, have a look [here](https://pytorch.org/vision/0.14/models.html) for the documentation.
 
@@ -77,8 +80,10 @@ feature extraction. You can see the general structure of this model
 To account for the smaller images in CIFAR, replace the `avgpool` layer with an identity layer and
 to account for the smaller number of classses, replace the fully-connected classifier with the
 classifier we have been using so far in `CIFAR10Net` but with an input dimension of 512 in the first
-linear layer to match the dimension of the features. Train this model from scratch as a baseline for
-60 epochs, without dropout but with data augmentation.
+linear layer to match the dimension of the features. Provide an argument to your Lightning CIFAR
+module to select between the `CIFAR10Net` and the VGG-16 from torchvision as the model. Train the
+VGG-16 model from scratch as a baseline for 60 epochs, without dropout but with data augmentation.
+Use the Lightning module for that again.
 
 Then, load the weights trained on ImageNet which are available in torchvision. This is done by
 setting the torch cache directory to the `torch_cache` directory in the root of this repository and
