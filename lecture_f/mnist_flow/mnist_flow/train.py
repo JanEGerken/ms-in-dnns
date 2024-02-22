@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import sys
+import pathlib as pl
 
 import wandb
 from lightning.pytorch.loggers import WandbLogger
@@ -65,9 +66,12 @@ if __name__ == "__main__":
 
     parser.add_lightning_class_args(MNISTDataModule, "data")
     if "LOG_PATH" in os.environ:
-        parser.set_defaults({"data.data_root": "/gcs/msindnn_staging/mnist_data"})
+        bucket_name = os.environ["BUCKET"].split("gs://")[1]
+        parser.set_defaults({"data.data_root": str(pl.PurePosixPath("/gcs", bucket_name,
+                                                                    "mnist_data"))})
     else:
-        parser.set_defaults({"data.data_root": "../../../data/mnist"})
+        parser.set_defaults({"data.data_root": str(pl.PurePath("..", "..", "..", "data",
+                                                               "mnist"))})
 
     if "CREATION_TIMESTAMP" in os.environ:
         timestamp = os.environ["CREATION_TIMESTAMP"]

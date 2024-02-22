@@ -5,7 +5,7 @@ In Lecture D, we wrote a simple training script for the [Adult income data from 
 
 Add a checkpointing mechanism to the `income_net.py` training script. In particular, at the end of each epoch, the model- and optimizer state should be saved to disc. On Google Cloud, the checkpoint should be saved to the same directory in which the output text file is saved. You should only keep the last checkpoint (they can become large for bigger models). Additionally, always keep the best checkpoint according to validation loss. Therefore, you should end up with two checkpoints at the end of training: The best and the last one.
 
-Compute the validation accuracy not only at the end of training but after each epoch and select the best epoch based on this metric instead. Rewrite the final evaluation to use the best epoch (according to validation accuracy), instead of the last one. Discuss potential pitfalls of this strategy.
+Compute the validation accuracy not only at the end of training but after each epoch, log it and select the best epoch based on this metric instead. Rewrite the final evaluation to use the best epoch (according to validation accuracy), instead of the last one. Discuss potential pitfalls of this strategy.
 
 To get an idea of how the model is behaving, it is very helpful to look at some example predictions. Using the best epoch, predict on ten samples from each class of the validation data and log the results using a [`wandb.Table`](https://docs.wandb.ai/guides/track/log/log-tables#create-tables), as well as to terminal output.
 
@@ -31,7 +31,7 @@ Using the insights you have gained, improve the training procedure so that the s
 3. Re-sample the **training** data by repeating the high-income examples until there are equally many high-income and low-income examples. To this end, write a class `ResampledDataset` which takes a dataset as the only argument to its constructor and inherits from `torch.utils.data.Dataset`. The samples should be randomly shuffled. There is a test of for this class in `test_assignment_d.py`.
 
 For all the new training options you add to your model, make the additional hyperparameters
-`argarse` arguments with default values corresponding to the previous behaviour. Discuss the results of trying out the different strategies and compare how well they worked.
+`argparse` arguments with default values corresponding to the previous behaviour. Discuss the results of trying out the different strategies and compare how well they worked.
 
 Summarize your work in a [Weights and Biases Report](https://docs.wandb.ai/guides/reports). Create
 a report, publish it to your project and then save it as a PDF. These reports also allow you to add
@@ -106,17 +106,22 @@ This model has about 40M trainable parameters and can only be reasonably trained
 
 Train the model specified above with batch size 32 for a few epochs and observe the loss curves.
 
-Next, add an `argparse` option called `--batchnorm` to add a `torch.nn.BatchNorm2d` layer after each convolutional layer. Train the model for 60 epochs and interpret the training- and validation loss curves. This run should take about 1h to complete.
+Next, add an `argparse` option called `--batchnorm` to add a `torch.nn.BatchNorm2d` layer after each
+convolutional layer. Train the model for 60 epochs and interpret the training- and validation loss
+curves as well as validation accuracy. This run should take about 1h to complete.
 
 Next, add an option `--dropout` for a `torch.nn.Dropout` layer with dropout probability `0.3` after
 each pooling layer and after the ReLU layers in the fully connected classifier. Train this model
-with batch norm and dropout for 60 epochs and interpret the results and training and validation loss curves.
+with batch norm and dropout for 60 epochs and interpret the results and training and validation loss
+curves as well as validation accuracy.
 
 Finally, add an option `--augment` for data augmentation. Augment the **training** data using
 `torchvision.transforms` with random horizontal- and vertical flips, random rotations by -10 to 10
 degrees, random resized crops with a scale of 0.8 to 1.0 and an aspect ratio of 0.8 to 1.2 and
 a color jittering with brightness factor, contrast factor and  saturation factor in $[0.8, 1.2]$ and
-hue factor of $[-0.2, 0.2]$. Train again for 60 epochs and interpret the results. Also try combining data augmentation and dropout.
+hue factor of $[-0.2, 0.2]$. Train again for 60 epochs with training and validation loss curves as
+well as validation accuracy and interpret the results. Also try combining data augmentation and
+dropout.
 
 Summarize your results in a WandB report, including the table of predicted results and the learning curves.
 
