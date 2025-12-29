@@ -8,15 +8,15 @@ import json
 from google.cloud import aiplatform, storage
 from google.oauth2 import service_account
 
-PROJECT = "msdnn-lectures"
+PROJECT = "x"
 REGION = "europe-west4"
-BUCKET = "gs://msindnn_staging"
+BUCKET = "gs://msindnn-assignments_bucket"
 EXPERIMENT = "msdnn-assignments"
 EXP_DESCRIPTION = "Assignments for MS in DNNs lecture"
 WANDB_KEY = json.load(open("wandb_key.json"))
 CREDENTIALS = service_account.Credentials.from_service_account_file("credentials.json")
 CONTAINER = "europe-docker.pkg.dev/vertex-ai/training/pytorch-gpu.1-13.py310:latest"
-N_GPUS = 1
+N_GPUS = 0
 DATETIME_FMT = "%Y-%m-%d_%H%M%S"
 
 aiplatform.init(
@@ -59,14 +59,15 @@ def launch_script_job(args):
     timestamp = datetime.now().strftime(DATETIME_FMT)
     log_path = PurePosixPath(BUCKET.replace("gs://", "/gcs/"), f"{args.name}_{timestamp}", "log.txt")
     requirements = [
-        "torch==1.13",
-        "lightning==2.1.2",
-        "torchvision==0.14.0",
+        "torch==1.13.1",
+        "lightning==2.0.9",
+        "torchvision==0.14.1",
         "matplotlib==3.8.2",
         "pandas==2.1.4",
         "wandb==0.16.1",
         "jsonargparse[signatures]==4.27.1",
         "rich==13.7.0",
+        "python-json-logger",
     ]
 
     job = aiplatform.CustomJob.from_local_script(
@@ -78,6 +79,7 @@ def launch_script_job(args):
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
             "BUCKET": BUCKET,
+            "PIP_NO_USER_INSTALL": "1",
         },
         machine_type="n1-standard-4",
         accelerator_type="NVIDIA_TESLA_T4",
@@ -147,6 +149,7 @@ def launch_package_job(args):
             "CREATION_TIMESTAMP": timestamp,
             "WANDB_KEY": WANDB_KEY,
             "BUCKET": BUCKET,
+            "PIP_NO_USER_INSTALL": "1",
         },
     )
     return job

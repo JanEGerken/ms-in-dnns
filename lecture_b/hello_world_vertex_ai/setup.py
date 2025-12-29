@@ -6,6 +6,11 @@ setup(
     version="0.1",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["lightning==2.1.2"],
+    install_requires=[
+        "torch==1.13.1",
+        "torchvision==0.14.1",
+        "lightning==2.0.9",
+        "python-json-logger",
+    ],
     description="Hello World",
 )
