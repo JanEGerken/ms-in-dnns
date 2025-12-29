@@ -29,19 +29,18 @@ pip3 freeze
    [Google Cloud mainpage](https://cloud.google.com/).
 4. Activate the *Vertex AI API* by searching for "vertex ai" in the search bar at
    the top. You will find it under *Marketplace*. Click on it and *enable* it.
-5. In the navigation bar on the left, scroll down to the section *ARTIFICIAL
-   INTELLIGENCE* and click on *Vertex AI* (alternatively search for "vertex ai"
-   again in the search bar but select the product and not the API.
-6. Go to "Training" in the navigation sidebar on the left and select the region
-   "europe-west4". Your runs will appear here.
+5. In the navigation bar on the left, scroll down to the section *Products*-*Vertex AI* and click on *Dashboard* (alternatively search for "vertex ai"
+   again in the search bar but select the product and not the API).
+6. Scroll down to the bottom and select the region
+   "europe-west4". To view your runs, click *Training* in the *Model development* section in the navigation bar on the left.
 7. Increase the GPU-quota:
     1. Type "all quotas" into the search bar, click on the suggested page and
        at the top of the long list of services
     2. On this page, search for
        "aiplatform.googleapis.com/custom_model_training_nvidia_t4_gpus" next to
-       the *Filter*. Additionally add "europe-west4" to the filter as a second
+       the *Filter*. Additionally add the region "europe-west4" to the filter as a second
        element. Check the checkbox next to the quota
-    3. Click "Edit quota" at the top right and request an increase to 1. As
+    3. Click "Edit quota" on the top next to *1 quota selected* and request an increase to 1. As
 	a request description you can enter
 		> It will be used for the course "Mathematical Structures of Deep
  		> Neural Networks" by Jan Gerken hosted together by the Chalmers
@@ -58,7 +57,7 @@ pip3 freeze
 
 #### Create a storage bucket for your code
 1. Search for "cloud storage" at the top of the [Google Cloud mainpage](https://cloud.google.com/)
-2. Click "Create", give the bucket a name, press "continue"
+2. Click "Create bucket", give the bucket a name, press "continue"
 3. Select region type "Region" and choose the region `europe-west4`
 4. The final settings can remain default, confirm the bucket by clicking
    "create".
@@ -66,17 +65,17 @@ pip3 freeze
 #### Set up a service account and download credentials
 1. Search for "service accounts" in AIM & Admin at the top of the [Google Cloud mainpage](https://cloud.google.com/)
 2. Create a new service account and give it any name
-3. At "Grant this service account access to project", add the roles "Vertex AI Custom Code Service Agent", "Service Account User" and "Storage Object Admin"
+3. At "Permissions", add the roles "Vertex AI Custom Code Service Agent", "Service Account User" and "Storage Object Admin"
 4. The final settings can remain default, confirm the service account by
    clicking on "done".
 5. Click on the newly created service account and switch to the "Keys" tab
-6. Create a new key by clicking "ADD KEY" and "Create new key" and selecting
+6. Create a new key by clicking "Add key" and "Create new key" and selecting
    the JSON format. A `.json` file should be downloaded.
 7. Name the `.json` file `credentials.json` and place it in the `ms-in-dnns` root directory
 
 #### Change local settings
 In the `launch_vertex_job.py` script at the root of the `ms-in-dnns` directory, set
-- `PROJECT` to the project ID (12 digits) of your project, to be found e.g. in the [console](https://console.cloud.google.com/)
+- `PROJECT` to the project number (12 digits) of your project, to be found e.g. in the [console](https://console.cloud.google.com/)
 - `BUCKET` to the URI of the bucket you created, it is "gs://" followed by the
   bucket id found e.g. in the bucket details in the tab "CONFIGURATION", there
   it is written next to "gsutil URI".
