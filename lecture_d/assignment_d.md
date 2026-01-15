@@ -38,90 +38,54 @@ a report, publish it to your project and then save it as a PDF. These reports al
 text/markdown fields, use them for your discussion. Submit the PDF on Canvas and add the URL to your
 online report as well.
 
-## Task 3: CIFAR10 and data augmentation (25 Points)
+## Task 3: Adversarial Attacks (25 Points)
 
-In this exercise, we start exploring the power of deep learning by training a CNN on the
-[CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) image classification dataset. This dataset
-consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000
-training images and 10000 test images. The classes are `["airplane", "automobile", "bird", "cat",
-"deer", "dog", "frog", "horse", "ship", "truck"]`. Create a `cifar_net.py` file for which you can adapt
-the `incomet_net.py` script you wrote in the previous exercise to load the CIFAR10 data using the dataset provided by `torchvision`. To use the images as input to the model, you need to transform them to torch tensors and adjust their range. You can do this using `torchvision.transforms`
-```python
-transform = transforms.Compose(
-        [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
-    )
+As discussed in Lecture 4, it is not hard to find images which fool a well-trained classifier into
+giving the wrong prediction, even with no perceptible difference to a correctly classified image.
+This is known as adversarial vulnerability. In this exercise, you will compute adversarial examples
+for a pre-trained CIFAR-10 classifier.
+
+A pre-trained `SimpleCIFARNet` model is provided in the [`cifar10_simple`](cifar10_simple/) package
+along with a checkpoint file `pretrained_cifar10.ckpt`. Install the package in editable mode:
+
+```bash
+cd cifar10_simple
+pip install -e .
 ```
-The model we are going to use in this exercise is a variant of the popular VGG16 architecture, introduced for the ImageNet dataset [here](https://arxiv.org/abs/1409.1556). In PyTorch, we can implement this model as
-```python
-class CIFARNet(nn.Module):
-    def __init__(self, num_classes=10):
-        super().__init__()
-        self.features = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-        )
-        self.classifier = nn.Sequential(
-            nn.Linear(512 * 2 * 2, 4096),
-            nn.ReLU(inplace=True),
-            nn.Linear(4096, 4096),
-            nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes),
-        )
 
-    def forward(self, x):
-        x = self.features(x)
-        x = torch.flatten(x, 1)
-        x = self.classifier(x)
-        return x
-```
-This model has about 40M trainable parameters and can only be reasonably trained on a GPU. Replace the prediction logging from the `income_net.py` script by a new logging mechanism which populates a `wandb.Table` with columns image, ground truth and prediction. For 5 validation samples from each class, log the image, as well as the names of the ground truth and predicted classes. You can have a look at  [this](https://colab.research.google.com/github/wandb/examples/blob/master/colabs/datasets-predictions/W&B_Tables_Quickstart.ipynb) notebook for inspiration. In the web UI, group the table by the ground-truth column to get a convenient overview. Make sure to log your runs to a new wandb project. For debugging the data generation and logging, it is advisable to use a small dummy-model which can be trained locally on the CPU. Once logging and data loading work as intended, you can train the full model on a Google Cloud GPU. When training the full model, be careful with the size of the checkpoints which will be several hundred MB.
+Write a script `adv_attacks.py` (you can use [`adv_attacks_template.py`](adv_attacks_template.py) as
+a starting point) which logs to a new WandB project `ms-in-dnns-cifar10-adv-attacks`. For data
+loading, you can use the functions provided in the `cifar10_simple` package and load the pre-trained
+model using the `load_pretrained` function.
 
-Train the model specified above with batch size 32 for a few epochs and observe the loss curves.
+Your script should have the following `argparse` arguments:
+- `--data-root` for the directory where to find the CIFAR10 data
+- `--run-name` for the name of the run
+- `--ckpt-path` for the path to the checkpoint to be used
+- `--source-class` the class of the samples to be optimized (one of the 10 CIFAR-10 class names)
+- `--n-samples` the number of samples to start the attack from (default: `5`)
+- `--max-iter` the maximum number of optimization iterations (default: `1000`)
+- `--lr` learning rate of the optimizer (default: `1e-3`)
+- `--prob-threshold` the predicted probability of the target class at which to stop the optimization (default: `0.99`)
 
-Next, add an `argparse` option called `--batchnorm` to add a `torch.nn.BatchNorm2d` layer after each
-convolutional layer. Train the model for 60 epochs and interpret the training- and validation loss
-curves as well as validation accuracy. This run should take about 1h to complete.
+First, find `--n-samples` samples in the validation data which lie in the source class. Then, for
+each of the 10 classes as target class, optimize the input to the network using the Adam optimizer
+(with `maximize=True`) until the maximum number of iterations is reached or the predicted
+probability for the target class surpasses the probability threshold. It is easiest to do this in
+pure PyTorch and not Lightning. You should end up with `n_samples * 10` new images.
 
-Next, add an option `--dropout` for a `torch.nn.Dropout` layer with dropout probability `0.3` after
-each pooling layer and after the ReLU layers in the fully connected classifier. Train this model
-with batch norm and dropout for 60 epochs and interpret the results and training and validation loss
-curves as well as validation accuracy.
+Log your results into a WandB table with columns:
+- `source_image`: the original image
+- `gt_class`: ground truth class (the source class)
+- `target_class`: the class the attack targets
+- `adversary`: the modified image
+- `diff`: rescaled pixel-by-pixel difference to original (choose a scaling that makes the difference visible)
+- `target_prob`: final target probability
 
-Finally, add an option `--augment` for data augmentation. Augment the **training** data using
-`torchvision.transforms` with random horizontal- and vertical flips, random rotations by -10 to 10
-degrees, random resized crops with a scale of 0.8 to 1.0 and an aspect ratio of 0.8 to 1.2 and
-a color jittering with brightness factor, contrast factor and  saturation factor in $[0.8, 1.2]$ and
-hue factor of $[-0.2, 0.2]$. Train again for 60 epochs with training and validation loss curves as
-well as validation accuracy and interpret the results. Also try combining data augmentation and
-dropout.
+Pick a source class with high accuracy (e.g., "ship" or "automobile" typically work well) and run
+the attack with the defaults given above. Discuss your results in a WandB report: How successful
+are the attacks? How perceptible are the perturbations? Are some target classes harder to achieve
+than others?
 
-Summarize your results in a WandB report, including the table of predicted results and the learning curves.
+Generate the report as a PDF and provide also a link to the online report in your submission.
 
