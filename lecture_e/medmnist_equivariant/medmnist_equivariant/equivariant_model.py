@@ -1,0 +1,86 @@
+"""
+C4-Equivariant CNN model for MedMNIST using escnn.
+
+TODO: Implement the C4EquivariantCNN and PLC4EquivariantModule classes.
+"""
+import torch
+import torch.nn as nn
+import lightning as L
+from torchmetrics.classification import MulticlassAccuracy
+
+# escnn imports
+from escnn import gspaces
+from escnn import nn as enn
+
+
+class C4EquivariantCNN(nn.Module):
+    """
+    C4-equivariant CNN using escnn library.
+
+    The C4 group consists of rotations by 0, 90, 180, and 270 degrees.
+    This model maintains equivariance to these rotations throughout the
+    feature extraction layers, then uses GroupPooling to produce
+    rotation-invariant features for classification.
+
+    TODO: Implement the equivariant architecture using escnn.
+    """
+
+    def __init__(self, in_channels: int, num_classes: int):
+        super().__init__()
+
+        # TODO: Define the symmetry group
+        # TODO: Define input field type
+        # The input is a scalar field (trivial representation)
+
+        # TODO: Build equivariant feature extractor
+        # Use enn.R2Conv for equivariant convolutions
+        # Use enn.ReLU for equivariant nonlinearity
+        # Use enn.PointwiseMaxPool for equivariant pooling
+        # Use enn.InnerBatchNorm for equivariant batch normalization (optional)
+
+        # TODO: Use enn.GroupPooling to convert equivariant features to invariant features
+        # This pools over the group dimension, producing rotation-invariant features
+
+        # TODO: Standard classifier on invariant features
+        # self.classifier = nn.Sequential(...)
+
+        raise NotImplementedError("TODO: Implement C4EquivariantCNN")
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # TODO: Implement forward pass
+        # 1. Wrap input as GeometricTensor: x = enn.GeometricTensor(x, self.input_type)
+        # 2. Pass through equivariant layers
+        # 3. Apply group pooling to get invariant features
+        # 4. Extract tensor and flatten: x = x.tensor; x = torch.flatten(x, 1)
+        # 5. Pass through classifier
+        raise NotImplementedError("TODO: Implement forward pass")
+
+
+class PLC4EquivariantModule(L.LightningModule):
+    """
+    PyTorch Lightning wrapper for C4EquivariantCNN.
+
+    TODO: Implement training_step, validation_step, test_step, and configure_optimizers.
+    This should be very similar to PLBaselineModule.
+    """
+
+    def __init__(self, in_channels: int, num_classes: int, lr: float = 1e-3):
+        super().__init__()
+        self.save_hyperparameters()
+        # TODO: Initialize model, loss function, and metrics
+        raise NotImplementedError("TODO: Implement PLC4EquivariantModule.__init__")
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        raise NotImplementedError("TODO: Implement forward")
+
+    def training_step(self, batch, batch_idx):
+        raise NotImplementedError("TODO: Implement training_step")
+
+    def validation_step(self, batch, batch_idx):
+        raise NotImplementedError("TODO: Implement validation_step")
+
+    def test_step(self, batch, batch_idx):
+        raise NotImplementedError("TODO: Implement test_step")
+
+    def configure_optimizers(self):
+        raise NotImplementedError("TODO: Implement configure_optimizers")
