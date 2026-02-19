@@ -82,7 +82,7 @@ making equivariant networks particularly valuable in this domain.
 
 For Windows, we recommend WSL for this task. See the light tutorial in `README.md`.
 
-This task can be done either locally or on Google Cloud. If you choose the latter, put the following two required packages into the `requirements` of `launch_vertex_job.py`.
+This task can be done either locally or on Google Cloud.
 
 ### Setup
 
@@ -104,7 +104,7 @@ pip install -e .
 If the installation fails, try:
 
 ```bash
-sudo apt-get install -y gfortran python3.10-dev 
+sudo apt-get install -y gfortran python3.10-dev
 ```
 
 We recommend using the **PathMNIST** dataset (colon pathology images, 9 classes, RGB 28x28) for this

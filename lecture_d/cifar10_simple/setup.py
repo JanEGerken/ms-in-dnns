@@ -7,7 +7,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "torchvision==0.14.0",
-        "wandb==0.16.1",
+        "wandb==0.22.3",
         "tqdm",
     ],
     description="Simplified CIFAR10 classifier for adversarial attacks exercise",

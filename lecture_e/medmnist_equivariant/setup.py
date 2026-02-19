@@ -9,7 +9,7 @@ setup(
         "lightning==2.1.2",
         "torchvision==0.14.0",
         "matplotlib==3.8.2",
-        "wandb==0.16.1",
+        "wandb==0.22.3",
         "jsonargparse[signatures]==4.27.1",
         "rich==13.7.0",
         "medmnist>=2.0.0",

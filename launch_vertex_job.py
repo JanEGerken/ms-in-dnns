@@ -64,7 +64,7 @@ def launch_script_job(args):
         "torchvision==0.14.1",
         "matplotlib==3.8.2",
         "pandas==2.1.4",
-        "wandb==0.16.1",
+        "wandb==0.22.3",
         "jsonargparse[signatures]==4.27.1",
         "rich==13.7.0",
         "python-json-logger",
